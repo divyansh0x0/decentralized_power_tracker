@@ -2,9 +2,9 @@
 
 
 import PowerMap from "~/components/PowerMap.vue";
-
+const url = "https://decentralized-power-tracker.onrender.com";
 async function addPowerData() {
-  const res = await fetch("http://127.0.0.1:8000/power-data/", {
+  const res = await fetch(`${url}/power-data/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -25,9 +25,16 @@ async function addPowerData() {
   console.log("Response:", data);
 }
 async function fetchAllData() {
-  const res = await fetch("http://127.0.0.1:8000/power-data/");
+  console.log("Fetching all data");
+  const res = await fetch(`${url}/power-data/`);
   const data = await res.json();
   console.log("All data:", data);
+}
+
+async function connect(){
+  const res = await fetch(`${url}`);
+  const data = await res.json();
+  console.log("Connected",data);
 }
 fetchAllData();
 
@@ -35,6 +42,7 @@ fetchAllData();
 <template>
     <main>
       <PowerMap class="odd-section" />
+      <button v-on:click="connect">Fetch</button>
     </main>
 </template>
 <style scoped>

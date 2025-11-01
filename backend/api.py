@@ -1,7 +1,7 @@
 import hashlib
 import json
 from datetime import datetime
-
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, HTTPException, Query
 from pydantic import BaseModel, Field
 from pymongo import MongoClient
@@ -20,7 +20,16 @@ api = FastAPI()
 INFURA_URL = os.getenv("INFURA_URL")  # e.g. https://sepolia.infura.io/v3/YOUR_PROJECT_ID
 PRIVATE_KEY = os.getenv("PRIVATE_KEY")  # Your wallet private key
 SENDER_ADDRESS = os.getenv("PUBLIC_ADDRESS")  # Your wallet address
+# Allow specific origins (your frontend URL)
+origins = ["*"]
 
+api.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,          # or ["*"] for testing
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 w3 = Web3(Web3.HTTPProvider(INFURA_URL))
 
 if not w3.is_connected():
