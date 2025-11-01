@@ -27,9 +27,10 @@ for item in arr:
         "latitude": float(coord[0]),
         "longitude": float(coord[1]),
         "pincode": 1000 + round(random.random() * 100000),
-        "power_availability": 0.3 + round(random.random()*0.7, 2),
-        "number_power_cuts": round(random.random() * 600),
-        "number_complaints": round(random.random() * 150),
+        "is_power_available": random.choice([0,1]) == 1,
+        "avg_power_availability": 0.3 + round(random.random()*0.7, 2),
+        "avg_power_cuts_count": round(random.random() * 600),
+        "complaints_count": round(random.random() * 150),
     }
     print("Sending", body)
     response = requests.post(f"{url}/power-data/", json=body)

@@ -54,9 +54,10 @@ class PowerData(BaseModel):
     latitude: float
     longitude: float
     pincode: int
-    power_availability: float = Field(..., ge=0, le=1)
-    number_power_cuts: int = 0
-    number_complaints: int = 0
+    avg_power_availability:bool
+    avg_power_availability: float = Field(..., ge=0, le=1)
+    avg_power_cuts_count: int = 0
+    complaints_count: int = 0
 
 
 @dataclass
