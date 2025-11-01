@@ -9,18 +9,13 @@ interface NavLink {
 
 const links: NavLink[] = [
     {
-        name: "Home",
-        url : "",
-        icon: "mdi:home-variant-outline"
-    },
-    {
         name: "Map",
-        url : "",
+        url : "./",
         icon: "mdi:map"
     },
     {
         name: "Complaints",
-        url : "",
+        url : "./complaint",
         icon: "streamline-freehand:customer-action-complaint"
     }
 ];
@@ -37,19 +32,14 @@ const links: NavLink[] = [
                     <span class="nav-link-name">{{ link.name }}</span>
                 </a>
             </li>
-            <li>
-                <ButtonTheme />
-
-            </li>
         </ul>
 
-        <!--        </div>-->
     </nav>
 </template>
 
 <style scoped lang="scss">
 .nav-bg-overlay {
-    z-index: 98;
+    z-index: 999998;
     position: fixed;
     height: 100vh;
     width: 100vw;
@@ -58,16 +48,19 @@ const links: NavLink[] = [
 }
 
 .navbar {
+  backdrop-filter: blur(10px) brightness(150%);
+  border-radius: var(--border-radius-sm);
     user-select: none;
     background: none;
-    z-index: 99;
-    top: 0;
-    left: 0;
+    z-index: 999999;
+    bottom: 10px;
+    left: 50%;
+  transform: translateX(-50%);
     position: fixed;
     display: flex;
     justify-content: space-between;
     height: fit-content;
-    width: 100%;
+    width: fit-content;
     padding: 0;
 
 }
@@ -90,48 +83,17 @@ const links: NavLink[] = [
     width: 100%;
     height: 100%;
     color: var(--color-on-surface);
+  padding: 1em;
 }
 
 .nav-link-name {
-    display: block;
+    display: none;
 }
 
 .nav-link-icon {
-    display: none;
+    display: block;
     font-size: 2em;
     //width: 100%;
-}
-
-@media (orientation: portrait), (max-aspect-ratio: 0.9) {
-    //.nav-bg-overlay{
-    //    display: block;
-    //}
-
-    .nav-link-name {
-        display: none;
-    }
-    .nav-link-icon {
-        display: block;
-    }
-    .navbar {
-        top: unset;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: fit-content;
-        border-radius: var(--border-radius);
-        padding: var(--padding-md);
-    }
-    .nav-links {
-        border-radius: var(--border-radius);
-        backdrop-filter: blur(30px);
-        background-color: var(--color-overlay-container);
-    }
-    .nav-link{
-        padding: 0 var(--padding-md);
-
-    }
-
 }
 
 </style>

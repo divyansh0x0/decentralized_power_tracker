@@ -9,6 +9,8 @@ export default defineNuxtConfig({
     "~/assets/styles/default.css",
     "~/assets/styles/main.css",
     "~/assets/styles/theme.css",
+
+    'leaflet/dist/leaflet.css'
   ],
   modules: [
     '@nuxt/content',

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/ampere_power_tracker.iml" filepath="$PROJECT_DIR$/.idea/ampere_power_tracker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/decentralized_power_tracker.iml" filepath="$PROJECT_DIR$/.idea/decentralized_power_tracker.iml" />
     </modules>
   </component>
 </project>

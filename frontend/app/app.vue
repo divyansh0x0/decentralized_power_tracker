@@ -2,15 +2,18 @@
 
 </script>
 <template>
-    <div>
-        <KeepAlive>
-            <NavigationBar/>
-        </KeepAlive>
-        <NuxtPage/>
+    <div class="app-container">
 
-        <footer>© College Portal</footer>
+      <NuxtPage/>
+      <KeepAlive>
+        <NavigationBar/>
+      </KeepAlive>
     </div>
 </template>
 <style scoped>
+.app-container {
+  background-color: var(--color-surface-container-lowest);
+  position: relative;
+}
 
 </style>

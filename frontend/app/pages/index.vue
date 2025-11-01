@@ -1,9 +1,11 @@
-<script setup>
-// import HeroSection from "~/components/HeroSection.vue";
+<script setup lang="ts">
+
+
+import PowerMap from "~/components/PowerMap.vue";
 </script>
 <template>
     <main>
-
+      <PowerMap class="odd-section" />
     </main>
 </template>
 <style scoped>
