@@ -5,14 +5,15 @@ import {useThemeManager} from '~/composables/useThemeManager';
 const {theme, setTheme} = useThemeManager();
 
 interface PowerData {
+    iot_id:string,
+    recorded_at: string;
     latitude: number;
     longitude: number;
-    recorded_at: string;
     pincode: number;
-    currently_powered: boolean;
-    power_availability: number;
-    number_of_power_cuts: number;
-    number_of_complaints: number;
+    is_power_available: boolean;
+    avg_power_availability: number;
+    avg_power_cuts_count: number;
+    complaints_count: number;
 }
 interface TransactionData{
     _id:string;
@@ -29,15 +30,23 @@ async function fetchAllData():Promise<TransactionData[]> {
     return data["data"];
 }
 onMounted(async () => {
+    await import('leaflet/dist/leaflet.css');
     const iot_data = await fetchAllData();
     const L = await import('leaflet');
-    await import('leaflet/dist/leaflet.css');
+    const indiaBounds = L.latLngBounds(
+        [6.5, 68.0],   // Southwest corner of India
+        [37.1, 97.4]   // Northeast corner of India
+    );
+
 
     const map = L.map('map', {
-        center: [22.9734, 78.6569],
+        center: [21.7679, 78.8718],
         zoom: 5,
         zoomControl: false,
         attributionControl: false,
+        maxBounds: indiaBounds,       // restrict panning
+        maxBoundsViscosity: 1.0,      // prevent dragging outside
+        minZoom: 4.5,                 // prevent zooming out too far
     });
 
     const lightTiles = L.tileLayer(
