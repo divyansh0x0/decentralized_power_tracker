@@ -51,3 +51,8 @@ button{
     min-height: 100vh;
     position: relative;
 }
+.leaflet-popup-content-wrapper{
+    background-color: var(--color-overlay-container);
+    backdrop-filter: blur(30px);
+    color: var(--color-on-surface-variant);
+}

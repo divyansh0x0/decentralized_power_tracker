@@ -10,15 +10,18 @@ interface NavLink {
 const links: NavLink[] = [
     {
         name: "Map",
-        url : "./",
+        url : "/",
         icon: "mdi:map"
     },
     {
         name: "Complaints",
-        url : "./complaint",
+        url : "/complaint",
         icon: "streamline-freehand:customer-action-complaint"
     }
 ];
+import { useRoute } from 'vue-router';
+const route = useRoute();
+
 </script>
 
 <template>
@@ -27,7 +30,7 @@ const links: NavLink[] = [
         <!--        <div>-->
         <ul class="nav-links">
             <li v-for="link in links" :key="link.name">
-                <a :href="link.url" class="nav-link">
+                <a :href="link.url" class="nav-link" :class="{ active: route.path === link.url }">
                     <Icon class="nav-link-icon" :icon="link.icon"/>
                     <span class="nav-link-name">{{ link.name }}</span>
                 </a>
@@ -84,6 +87,9 @@ const links: NavLink[] = [
     height: 100%;
     color: var(--color-on-surface);
   padding: 1em;
+    &.active{
+        color: var(--color-accent);
+    }
 }
 
 .nav-link-name {

@@ -5,12 +5,13 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   css:[
+    'leaflet/dist/leaflet.css',
+
     "~/assets/scss/main.scss",
     "~/assets/styles/default.css",
     "~/assets/styles/main.css",
     "~/assets/styles/theme.css",
 
-    'leaflet/dist/leaflet.css'
   ],
   modules: [
     '@nuxt/content',
