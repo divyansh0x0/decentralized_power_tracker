@@ -1,63 +1,108 @@
-# Decentralized Power Tracker
+# ⚡ Decentralized Power Tracker
 
-## Why decentralized?
+## 🌍 Why Decentralized?
+Decentralization ensures transparency, accountability, and trust in power distribution monitoring.
+- **Tamper-proof data:** No single authority can alter or hide information.
+- **Public transparency:** Citizens can monitor the government’s performance and track how effectively power stations handle complaints.
+- **Trust-building:** Data immutability ensures fair handling of outages and complaints.
 
-This will allow tempering of data from any single authority which can allow corruption to creep in. This will also allow the people to actively see what the current goverment is doing and how well the Power Station handles complaints. 
-Decentralization builds trust.
-## How will it scale and cost of implementation
-It can be done in 3 stages:
-1. Transformer-Level Installation: It will be done on local distribution transformers or feeder pillars (each usually supplies 20–100 houses).
-   Ideal for a city-wide pilot.
+---
 
-2. Street-Level or Cluster-Level Installation: street distribution points that serve small clusters (10–20 homes).
-3. Per-House Installation:Inside or near smart meters / main breaker of individual homes.
+## ⚙️ Implementation & Scaling
 
-## Tech Stack
-### Front End
-- Nuxt/Vue
-- Leaflet for map
-- Government UI: an authenticated panel to mark complaints resolved/unresolved; record action audit trail (who, when, notes).
-### Backend
-- Python FastAPI
-- Central Database (MongoDB)
-### Block
-- Periodically (say, every 15 or 30 minutes), the backend takes all `(house_id + power_status + timestamp)` and hashes it for each record using SHA-256
-- Builds a Merkle Tree from all these hashes computes a Merkle Root for that area
-- Uploads the entire JSON batch to IPFS and get a CID
-- The backend sends the CID to smart contract on Ethereum
+The system can be deployed in **three stages** to balance cost and scalability:
 
-So the chain only has
-- Merkle Root (proof)
-- Area ID
-- IPFS link
-- Timestamp
+### 1. Transformer-Level Installation
+- Installed at **local distribution transformers** or feeder pillars (serving 20–100 houses).
+- Ideal for **city-wide pilot projects**.
 
-To get a specific house/transformer
+### 2. Street/Cluster-Level Installation
+- Deployed at **street-level distribution points** serving 10–20 homes.
+- Offers localized monitoring for smaller areas.
 
-### IOT
-Each IoT device (in a home, transformer, or street area) reports:
-- latitude
-- longitude
-- power_status (ON/OFF)
-- timestamp
-- device_signature
+### 3. Per-House Installation
+- Placed **inside or near smart meters / main breakers**.
+- Enables fine-grained tracking at the household level.
 
-```Text
-Bharti Airtel has already announced a major NB-IoT deployment: they partnered with Secure Meters to roll out NB-IoT based smart-meters for ~1.3 million homes in Bihar.
-SIM7020E NB‑IoT (Narrowband Internet of Things) Module can be used
-4G IoT Core network elements include 3GPP compliant HSS, PCRF, SCEF, DRA, and SMSC, supporting all the features and functionality for NB-IoT and LTE-M devices.
+---
 
+## 🧠 Tech Stack
+
+### **Frontend**
+- **Framework:** Nuxt / Vue
+- **Mapping:** Leaflet.js
+- **Government UI:**
+  - Authenticated panel for officials
+  - Resolve/unresolve complaints
+  - Record action audit trail (who, when, notes)
+
+### **Backend**
+- **Framework:** Python FastAPI
+- **Database:** MongoDB
+
+#### **Blockchain & Data Integrity**
+1. Every 15–30 minutes, backend collects data:
+   ```
+   (house_id, power_status, timestamp)
+   ```
+2. Each record is **hashed (SHA-256)**.
+3. **Merkle Tree** built from all hashes → compute **Merkle Root**.
+4. Upload full JSON batch to **IPFS** → get **CID**.
+5. Push to **Ethereum Smart Contract**, storing:
+   - Merkle Root
+   - Area ID
+   - IPFS link
+   - Timestamp
+
+🔍 To verify a record:
+Retrieve the IPFS JSON → verify hash inclusion using Merkle proof.
+
+---
+
+## 📡 IoT Setup
+
+Each IoT device reports:
 ```
-## prevention of IoT tempering
+latitude
+longitude
+power_status (ON/OFF)
+timestamp
+device_signature
+```
 
-Choose IoT boards that have TPM (Trusted Platform Module) or Secure Element chips. Like
-ESP32 with ATECC608A.
+### Suggested Hardware
+- **NB-IoT Module:** SIM7020E
+- **Network Example:** Bharti Airtel NB-IoT + Secure Meters (used for 1.3M smart meters in Bihar)
 
-### Secure Boot
+---
 
-Ensure the device only runs signed firmware.
-If someone flashes custom firmware (malware), the device refuses to boot.
-Encrypt all communications
-### Secure Network 
-TLS (HTTPS/MQTT over SSL) or DTLS for low-bandwidth devices.
-Even if someone intercepts packets, they can’t modify or read them.
+## 🔒 IoT Security & Anti-Tampering
+
+### **Hardware Security**
+- Use boards with **TPM or Secure Element chips** (e.g., ESP32 + ATECC608A).
+
+### **Secure Boot**
+- Device boots only **signed firmware**.
+- Prevents flashing of malicious code.
+- Encrypt all firmware and communication.
+
+### **Secure Network**
+- Use **TLS (HTTPS/MQTT over SSL)** or **DTLS** for constrained networks.
+- Prevents packet interception or modification.
+
+---
+
+## 🧩 Summary
+
+| Component | Technology | Purpose |
+|------------|-------------|----------|
+| Frontend | Nuxt/Vue + Leaflet | Map & Admin UI |
+| Backend | FastAPI + MongoDB | API & Data Management |
+| Blockchain | Ethereum + IPFS | Immutable Audit Trail |
+| IoT | SIM7020E / ESP32 | Power Status Detection |
+| Security | TPM, Secure Boot, TLS | Anti-Tampering & Data Protection |
+
+---
+
+## 🪄 Vision
+To create a **transparent, tamper-proof, and community-accessible power monitoring system** — enabling citizens to trust the data they see and governments to act with accountability.
