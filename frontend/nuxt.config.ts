@@ -3,6 +3,9 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
   ssr: true,
+  content: {
+    experimental: { nativeSqlite: true },
+  },
   nitro: {
     preset: 'vercel'
   },
@@ -23,9 +26,4 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/scripts',
   ],
-  vite:{
-    plugins:[
-        tailwindcss(),
-    ],
-  },
 })

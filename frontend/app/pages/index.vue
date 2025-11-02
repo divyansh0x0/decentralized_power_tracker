@@ -1,6 +1,4 @@
 <script setup lang="ts">
-
-
 import PowerMap from "~/components/PowerMap.vue";
 const url = "https://decentralized-power-tracker.onrender.com";
 async function addPowerData() {
