@@ -2,6 +2,10 @@
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
+  ssr: true,
+  nitro: {
+    preset: 'vercel'
+  },
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   css:[
@@ -23,7 +27,5 @@ export default defineNuxtConfig({
     plugins:[
         tailwindcss(),
     ],
-  }
-
-
+  },
 })
