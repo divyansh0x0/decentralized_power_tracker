@@ -6,11 +6,11 @@ export default defineNuxtConfig({
   content: {
     experimental: { nativeSqlite: true },
   },
+  devtools: { enabled: false },
   nitro: {
     preset: 'vercel'
   },
   compatibilityDate: '2025-07-15',
-  devtools: { enabled: true },
   css:[
     'leaflet/dist/leaflet.css',
 
