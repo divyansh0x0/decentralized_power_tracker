@@ -18,7 +18,7 @@ interface PowerData {
 
 interface TransactionData {
     _id: string;
-    power_data: string;
+    power_data: PowerData;
     transaction_id: string;
     verified_on_chain_at: string;
 }
@@ -34,8 +34,8 @@ async function fetchAllData(): Promise<TransactionData[]> {
 
 onMounted(async () => {
     await import('leaflet/dist/leaflet.css');
-    const iot_data = await fetchAllData();
     const L = await import('leaflet');
+    const markers:L.Layer[] = [];
     const indiaBounds = L.latLngBounds(
         [6.5, 68.0],   // Southwest corner of India
         [37.1, 97.4]   // Northeast corner of India
@@ -136,18 +136,33 @@ onMounted(async () => {
         marker.on('popupclose', () => {
             marker.setStyle({radius: 6, fillOpacity: 0.5});
         });
+        return marker;
     }
+    function clearMarkers() {
+        markers.forEach((marker) => map.removeLayer(marker));
+        markers.length = 0;
+    }
+    async function createAllMarkers(){
+        console.log("Refreshing power data...");
+        const iot_data = await fetchAllData();
+        clearMarkers();
+        for (const iot_data_el of iot_data) {
+            markers.push(addDataPoint(iot_data_el.power_data));
+        }
+    }
+    await createAllMarkers();
+    setInterval(async () => {
+        await createAllMarkers();
+    }, 60000); // refresh every 60 seconds
 
-    for (const iot_data_el of iot_data) {
-        addDataPoint(JSON.parse(iot_data_el["power_data"]));
-    }
+
 });
 </script>
 
 <template>
     <div class="map-wrapper">
         <div id="map"></div>
-        <h3>Decentralized Power Tracker</h3>
+        <h3>PowerChain</h3>
     </div>
 </template>
 

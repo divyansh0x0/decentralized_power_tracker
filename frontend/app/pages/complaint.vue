@@ -1,12 +1,42 @@
 <script setup lang="ts">
-import PowerMap from "~/components/PowerMap.vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
 const name = ref("");
 const phone = ref("");
 const area = ref("");
 const pincode = ref("");
 const description = ref("");
+
+// Get location using browser's Geolocation API
+const getLocation = () => {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            const { latitude, longitude } = position.coords;
+            await fetchLocationDetails(latitude, longitude);
+        }, (error) => {
+            console.error("Geolocation error:", error.message);
+        });
+    } else {
+        console.error("Geolocation not supported by this browser.");
+    }
+};
+
+// Reverse geocode to get area and pincode
+const fetchLocationDetails = async (lat: number, lon: number) => {
+    try {
+        const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+        const data = await response.json();
+        area.value = data.address.suburb || data.address.village || data.address.town || data.address.city || "";
+        pincode.value = data.address.postcode || "";
+    } catch (err) {
+        console.error("Failed to fetch location details:", err);
+    }
+};
+
+// Automatically fetch location on mount
+onMounted(() => {
+    getLocation();
+});
 
 </script >
  <template>
@@ -26,12 +56,12 @@ const description = ref("");
 
         <div class="form-group">
           <label for="area">Area / Locality</label>
-          <input id="area" v-model="area" type="text" placeholder="Enter your area or village name" required />
+          <input id="area" v-model="area" type="text" placeholder="Enter your area or village name" disabled readonly/>
         </div>
 
         <div class="form-group">
           <label for="pincode">Pincode</label>
-          <input id="pincode" v-model="pincode" type="text" placeholder="e.g. 560001" required />
+          <input id="pincode" v-model="pincode" type="text" placeholder="e.g. 560001" disabled readonly />
         </div>
 
         <div class="form-group">
